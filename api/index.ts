@@ -1,8 +1,11 @@
 import express, { Express, Request, Response } from "express";
+import dotenv from "dotenv"
 
 const app: Express = express();
+dotenv.config();
 
-const port = 3200;
+const port = process.env.PORT;
+
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Express + Typescript Server");
@@ -10,6 +13,3 @@ app.get("/", (req: Request, res: Response) => {
 
 app.listen(port);
 
-
-// sss
-//ssssss
