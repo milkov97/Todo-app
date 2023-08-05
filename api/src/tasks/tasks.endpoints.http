@@ -2,3 +2,15 @@
 
 GET http://localhost:3200/tasks
 Content-Type: application/json
+
+
+POST http://localhost:3200/tasks
+Content-Type: application/json
+
+{
+    "title": "Title",
+    "date": "2021-02-10-T12:00:00Z",
+    "description": "Some description",
+    "priority": "normal",
+    "status": "todo"
+}
