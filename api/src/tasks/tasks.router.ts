@@ -9,4 +9,4 @@ tasksRouter.get('/tasks', taskController.getAll);
 
 tasksRouter.post('/tasks', createValidator, taskController.create);
 
-tasksRouter.put('/tasls', updateValidator, taskController.update);
+tasksRouter.put('/tasks', updateValidator, taskController.update);
