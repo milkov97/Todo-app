@@ -2,7 +2,11 @@ import React, { FC, ReactElement } from "react";
 import { Avatar, Box, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 
-export const Profile: FC = (props: any): ReactElement => {
+interface ProfileInterface {
+    name?: string;
+}
+
+export const Profile: FC<ProfileInterface> = (props): ReactElement => {
   const { name = "Kristiyan" } = props;
   return (
     <Box
@@ -31,8 +35,4 @@ export const Profile: FC = (props: any): ReactElement => {
       </Typography>
     </Box>
   );
-};
-
-Profile.propTypes = {
-  name: PropTypes.string,
 };
