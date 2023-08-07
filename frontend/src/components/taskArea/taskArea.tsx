@@ -8,7 +8,7 @@ export const TaskArea: FC = (): ReactElement => {
   return (
     <Grid item md={8} px={4}>
       <Box mb={8} px={4}>
-        <h2>Status Of Your Task As On {format(new Date(), "PPPP")}</h2>
+        <h2>Status Of Your Tasks On {format(new Date(), "PPPP")}</h2>
       </Box>
       <Grid container display="flex" justifyContent="center">
         <Grid
