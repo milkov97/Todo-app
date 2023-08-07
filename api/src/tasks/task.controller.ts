@@ -19,7 +19,7 @@ class TaskController {
       // Convert the task instance to an array of objects
       allTasks = instanceToPlain(allTasks) as Task[];
       return res.json(allTasks).status(200);
-    } catch (_errors) {
+    } catch (errors) {
       return res.json({ error: 'Internal Server Error' }).status(500);
     }
   }
@@ -46,7 +46,7 @@ class TaskController {
 
       return res.json(createdTask).status(201);
     } catch (errors) {
-      return res.json({ error: 'Internal Server Error' }).status(500);
+      return res.json({ error: 'Post method' }).status(500);
     }
   }
 
@@ -82,7 +82,7 @@ class TaskController {
         plainToInstance(Task, { status: req.body.status }),
       );
       updatedTask = instanceToPlain(updatedTask) as UpdateResult;
-      return res.json(updatedTask).status(200)
+      return res.json(updatedTask).status(200);
     } catch (errors) {
       return res.json({ error: 'Internal Server Error' }).status(500);
     }

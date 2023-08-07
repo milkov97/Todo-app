@@ -1,5 +1,14 @@
 import React, { FC, ReactElement, useState } from "react";
-import { Box, Typography, Stack, LinearProgress, Button, Alert, AlertTitle } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
+import {
+  Box,
+  Typography,
+  Stack,
+  LinearProgress,
+  Button,
+  Alert,
+  AlertTitle,
+} from "@mui/material";
 
 import { TaskTitleField } from "./_taskTitleField";
 import { TaskDescriptionField } from "./_taskDescriptionField";
@@ -7,6 +16,8 @@ import { TaskDateField } from "./_taskDateField";
 import { TaskSelectField } from "./_taskSelectField";
 import { Status } from "./enums/Status";
 import { Priority } from "./enums/Priority";
+import { sendApiRequest } from "../../helpers/sendApiRequest";
+import { CreateTaskInterface } from "../taskArea/interfaces/createTaskInterface";
 
 export const CreateTaskForm: FC = (): ReactElement => {
   const [title, setTitle] = useState<string | undefined>(undefined);
@@ -14,6 +25,39 @@ export const CreateTaskForm: FC = (): ReactElement => {
   const [date, setDate] = useState<Date | null>(new Date());
   const [status, setStatus] = useState<string>(Status.todo);
   const [priority, setPriority] = useState<string>(Priority.normal);
+
+  const createTaskMutation = useMutation(
+    (data: CreateTaskInterface) =>
+      sendApiRequest<CreateTaskInterface>(
+        "http://localhost:3200/tasks",
+        "POST",
+        data
+      ),
+    {
+      onError: (error) => {
+        console.error("API Error:", error);
+      },
+    }
+  );
+
+  function createTaskHandler() {
+    if (!title || !date || !description) {
+      return;
+    }
+    const task: CreateTaskInterface = {
+      title,
+      description,
+      date: date.toISOString(),
+      status,
+      priority,
+    };
+    console.log(createTaskMutation);
+    
+    
+    createTaskMutation.mutate(task);
+  }
+
+
   return (
     <Box
       display="flex"
@@ -23,6 +67,11 @@ export const CreateTaskForm: FC = (): ReactElement => {
       px={4}
       my={6}
     >
+      <Alert severity="success" sx={{ width: "100%", marginBottom: "16px" }}>
+        <AlertTitle>Success</AlertTitle>
+        The task has been created successfully
+      </Alert>
+
       <Typography mb={2} component="h2" variant="h6">
         Create A Task
       </Typography>
@@ -41,11 +90,11 @@ export const CreateTaskForm: FC = (): ReactElement => {
             items={[
               {
                 value: Status.todo,
-                label: Status.todo,
+                label: Status.todo.toUpperCase(),
               },
               {
                 value: Status.inProgress,
-                label: Status.inProgress,
+                label: Status.inProgress.toUpperCase(),
               },
             ]}
           />
@@ -70,6 +119,15 @@ export const CreateTaskForm: FC = (): ReactElement => {
             ]}
           />
         </Stack>
+        <LinearProgress />
+        <Button
+          onClick={createTaskHandler}
+          variant="contained"
+          size="large"
+          fullWidth
+        >
+          Create A Task
+        </Button>
       </Stack>
     </Box>
   );

@@ -5,7 +5,7 @@ function returnCorrectRequest(method: Method, data: unknown): RequestInit {
     return {
       method: method,
       headers: {
-        "Content-type": "application/json",
+        "Content-Type": "application/json",
       },
     };
   }
@@ -13,7 +13,7 @@ function returnCorrectRequest(method: Method, data: unknown): RequestInit {
     method: method,
     body: JSON.stringify(data),
     headers: {
-      "Content-type": "application/json",
+      "Content-Type": "application/json",
     },
   };
 }
@@ -26,7 +26,7 @@ export async function sendApiRequest<T>(
   const response = await fetch(url, returnCorrectRequest(method, data));
   if (!response.ok) {
     const message = `An error has occured: ${response.status}`;
-    throw new Error(message)
+    throw new Error(message);
   }
-  return await response.json() as Promise<T>;
+  return (await response.json()) as Promise<T>;
 }
