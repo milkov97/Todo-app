@@ -1,10 +1,10 @@
 import React, { FC, ReactElement } from "react";
 import { Box, Chip, Typography } from "@mui/material";
-import { TaskHeaderInterdace } from "./interfaces/TaskHeaderInterface";
+import { TaskHeaderInterface } from "./interfaces/TaskHeaderInterface";
 import {format} from 'date-fns'
 import PropTypes from 'prop-types'
 
-export const TaskHeader: FC<TaskHeaderInterdace> = (props): ReactElement => {
+export const TaskHeader: FC<TaskHeaderInterface> = (props): ReactElement => {
   const { title = "Default title", date = new Date() } = props;
   return (
     <Box display="flex" width="100%" justifyContent="space-between" mb={3}>

@@ -1,7 +1,10 @@
 import React, { FC, ReactElement } from "react";
 import { Box, Button, FormControlLabel, Switch } from "@mui/material";
-//@ts-ignore
-export const TaskFooter: FC = (): ReactELement => {
+import { TaskFooterInterface } from "./interfaces/TaskFooterInterface";
+import PropTypes from 'prop-types'
+
+export const TaskFooter: FC<TaskFooterInterface> = (props): ReactElement => {
+  const {onStatusChange = (e) => console.log(e), onClick = (e) => console.log(e)} = props  
   return (
     <Box
       display="flex"
@@ -11,7 +14,7 @@ export const TaskFooter: FC = (): ReactELement => {
     >
       <FormControlLabel
         label="In Progress"
-        control={<Switch color="warning" />}
+        control={<Switch onChange={(e) => onStatusChange(e)} color="warning" />}
       />
       <Button
         variant="contained"
@@ -20,9 +23,16 @@ export const TaskFooter: FC = (): ReactELement => {
         sx={{
             color:'#ffffff'
         }}
+        onClick={(e) => onClick(e)}
       >
         Makr Complete
       </Button>
     </Box>
   );
 };
+
+
+TaskFooter.propTypes = {
+    onStatusChange: PropTypes.func,
+    onClick: PropTypes.func
+}

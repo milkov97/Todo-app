@@ -1,6 +1,6 @@
 
 
-export interface TaskHeaderInterdace {
+export interface TaskHeaderInterface {
     title?: string,
     date?: Date;
 }
