@@ -2,6 +2,7 @@ import { Grid, Box } from "@mui/material";
 import React, {FC, ReactElement} from "react";
 import { format } from 'date-fns'
 import { TaskCounter } from "../taskCounter/taskCounter";
+import { Task } from "../task/task";
 
 export const TaskArea: FC = (): ReactElement => {
   return (
@@ -31,9 +32,9 @@ export const TaskArea: FC = (): ReactElement => {
           xs={10}
           md={8}
         >
-          <Box>Task will come over heve</Box>
-          <Box>Task will come over heve</Box>
-          <Box>Task will come over heve</Box>
+          <Task />
+          <Task />
+          <Task />
         </Grid>
       </Grid>
     </Grid>
