@@ -1,7 +1,11 @@
 import React, { FC, ReactElement } from "react";
 import { Avatar, Box, Typography } from "@mui/material";
+import { TaskCounterInterface } from "./interfaces/TaskCounterInterface";
+import { Status } from "../createTaskForm/enums/Status";
+import { emitCorrectBorderColor } from "./helpers/emitCorrectBorderColor";
 
-export const TaskCounter: FC = (): ReactElement => {
+export const TaskCounter: FC<TaskCounterInterface> = (props): ReactElement => {
+  const {status = Status.todo, count = 0} = props;
   return (
     <>
       <Box
@@ -17,7 +21,7 @@ export const TaskCounter: FC = (): ReactElement => {
             width: '96px',
             height: '96px',
             marginBottom: '16px',
-            borderColor: 'warning.light'
+            borderColor: `${emitCorrectBorderColor(status)}`
           }}
         >
           <Typography color='#ffffff' variant='h4'>10</Typography>
