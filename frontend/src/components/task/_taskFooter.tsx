@@ -4,7 +4,7 @@ import { TaskFooterInterface } from "./interfaces/TaskFooterInterface";
 import PropTypes from 'prop-types'
 
 export const TaskFooter: FC<TaskFooterInterface> = (props): ReactElement => {
-  const {onStatusChange = (e) => console.log(e), onClick = (e) => console.log(e)} = props  
+  const {id, status, onStatusChange = (e) => console.log(e), onClick = (e) => console.log(e)} = props  
   return (
     <Box
       display="flex"
@@ -33,6 +33,8 @@ export const TaskFooter: FC<TaskFooterInterface> = (props): ReactElement => {
 
 
 TaskFooter.propTypes = {
+    id: PropTypes.string.isRequired,
+    status: PropTypes.string,
     onStatusChange: PropTypes.func,
     onClick: PropTypes.func
 }
