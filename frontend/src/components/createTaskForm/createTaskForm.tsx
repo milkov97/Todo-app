@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState, useEffect } from "react";
+import React, { FC, ReactElement, useState, useEffect, useContext } from "react";
 import { useMutation } from "@tanstack/react-query";
 import {
   Box,
@@ -18,6 +18,7 @@ import { Status } from "./enums/Status";
 import { Priority } from "./enums/Priority";
 import { sendApiRequest } from "../../helpers/sendApiRequest";
 import { CreateTaskInterface } from "../taskArea/interfaces/createTaskInterface";
+import { TaskStatusChangedContext } from "../../context";
 
 export const CreateTaskForm: FC = (): ReactElement => {
   const [title, setTitle] = useState<string | undefined>(undefined);
@@ -26,6 +27,8 @@ export const CreateTaskForm: FC = (): ReactElement => {
   const [status, setStatus] = useState<string>(Status.todo);
   const [priority, setPriority] = useState<string>(Priority.normal);
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
+
+  const tasksUpdatedContext = useContext(TaskStatusChangedContext);
 
   const createTaskMutation = useMutation(
     (data: CreateTaskInterface) =>
@@ -60,6 +63,7 @@ export const CreateTaskForm: FC = (): ReactElement => {
   useEffect(() => {
     if (createTaskMutation.isSuccess) {
       setShowSuccess(true);
+      tasksUpdatedContext.toggle();
     }
 
     const successTimeout = setTimeout(() => {
