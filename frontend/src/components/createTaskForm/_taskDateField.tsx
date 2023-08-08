@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 
 export const TaskDateField: FC<DateFieldInterface> = (props): ReactElement => {
   const {
-    value = new Date(),
+    value= new Date(),
     disabled = false,
     onChange = (date) => console.log(date),
   } = props;
