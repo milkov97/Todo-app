@@ -4,9 +4,11 @@ import React, { FC, ReactElement } from "react";
 import { format } from "date-fns";
 import { TaskCounter } from "../taskCounter/taskCounter";
 import { Task } from "../task/task";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { sendApiRequest } from "../../helpers/sendApiRequest";
 import { TaskApiInterface } from "./interfaces/taskApiInterface";
+import { Status } from "../createTaskForm/enums/Status";
+import { UpdateTaskInterface } from "../createTaskForm/interfaces/updateTaskInterface";
 
 export const TaskArea: FC = (): ReactElement => {
   const { error, isLoading, data, refetch } = useQuery(["tasks"], async () => {
@@ -15,6 +17,31 @@ export const TaskArea: FC = (): ReactElement => {
       "GET"
     );
   });
+
+  const updateTaskMutation = useMutation((data: UpdateTaskInterface) =>
+    sendApiRequest("http://localhost:3200/tasks", "PUT", data)
+  );
+
+  function onStatusChangeHandler(
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: string
+  ) {
+    updateTaskMutation.mutate({
+      id,
+      status: e.target.checked ? Status.inProgress : Status.todo,
+    });
+  }
+
+  function markCompleteHandler(
+    e:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.MouseEvent<HTMLAnchorElement>,
+    id: string
+  ) {
+    updateTaskMutation.mutate({
+      id, status: Status.completed
+    })
+  };
 
   return (
     <Grid item md={8} px={4}>
@@ -54,9 +81,8 @@ export const TaskArea: FC = (): ReactElement => {
             Array.isArray(data) &&
             data.length > 0 &&
             data.map((each, index) => {
-              console.log(new Date(each.date));
-
-              return (
+              return each.status === Status.todo ||
+                each.status === Status.inProgress ? (
                 <Task
                   id={each.id}
                   key={index + each.priority}
@@ -65,7 +91,11 @@ export const TaskArea: FC = (): ReactElement => {
                   description={each.description}
                   priority={each.priority}
                   status={each.status}
+                  onStatusChange={onStatusChangeHandler}
+                  onClick={markCompleteHandler}
                 />
+              ) : (
+                false
               );
             })
           )}
