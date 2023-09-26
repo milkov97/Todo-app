@@ -1,5 +1,10 @@
 # TypeScript Course Project
 
+![Project Image](https://github.com/milkov97/Todo-app/blob/main/img/whole%20page%20view.png?raw=true)
+
+
+## 
+
 This repository contains the code and resources for my TypeScript course project. In this course, I've learned TypeScript from scratch, starting with basic type safety and gradually progressing to advanced Object-Oriented Programming (OOP) features, advanced TypeScript concepts, and building a full-stack application using TypeScript.
 **Course Link: [TypeScript Course](https://www.udemy.com/course/typescript-course/)**
 
@@ -44,5 +49,5 @@ npm start
 
 #### Back-end (Node.js)
 cd api
-npm start
+npm run dev
 ### 4. Visit http://localhost:3200 in your browser to access the application.
